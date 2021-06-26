@@ -60,3 +60,7 @@ textarea{
     color: red;
     font-weight: bold;
 }
+
+.command{
+    font-size: 12px;
+}

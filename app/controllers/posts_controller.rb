@@ -26,6 +26,29 @@ class PostsController < ApplicationController
         @post = Post.new
     end
     
+    def edit
+        @post = Post.find(params[:id])
+    end
+    
+    # 既存の記事を編集する
+    def update
+        @post = Post.find(params[:id])
+        # 編集した内容をサーバーに送り返す
+        if @post.update(post_params)
+            redirect_to posts_path
+        else
+            # 更新に失敗したら編集画面に戻る
+            render "edit"
+        end
+    end
+    
+    # 既存の記事を削除する
+    def destroy
+        @post = Post.find(params[:id])
+        @post.destroy
+        redirect_to posts_path
+    end
+    
     private def post_params
         params.require(:post).permit(:title, :body)
     end
