@@ -1,13 +1,39 @@
-<h2>
-    <%= link_to 'Add New', '/posts/new', class: 'header-menu' %>
-    My Posts
-</h2>
-<ul>
+<!-- ヘッダー -->
+<div class="d-flex justify-content-between">
+    <h2>My Posts</h2>
+    <!-- 新規作成ボタン -->
+    <%= button_to t('.add_new'), new_post_path, method: :get, class: 'btn btn-sm btn-primary' %>
+</div>
+<!-- 記事 -->
+<ul class="list-group mt-2">
     <% @posts.each do |post| %>
-        <li>
-            <%= link_to post.title, post_path(post) %>
-            <%= link_to '[Edit]', edit_post_path(post), class: 'command' %>
-            <%= link_to '[x]', post_path(post), method: :delete, class: 'command', data: {confirm: 'Sure?'} %>
+        <li class="list-group-item d-flex justify-content-between">
+            <div>
+                <!-- 記事名 -->
+                <%= link_to post.title, post_path(post) %>
+                <!-- コメント数 -->
+                <!-- コメント数確認用
+                <span class="badge badge-primary badge-pill">1</span>
+                -->
+                <% if post.comments.any? %>
+                    <span class="badge badge-primary badge-pill"><%= psot.comments.size %></span>
+                <% end %>
+                <!-- 記事作成の日時を表示 -->
+                <span class='text-secondary'>
+                    <%= l(post.created_at, format: :long) %>
+                </span>
+            </div>
+            <!-- 記事の編集用のドロップダウン -->
+            <div class="dropdown">
+                <button class="btn btn-sm btn-link dropdown-toggle p-0" data-toggle="dropdown">
+                </button>
+                <div class="dropdown-menu">
+                    <!-- 削除 -->
+                    <%= link_to t('.delete'), post_path(post), method: :delete, class: 'command', data: {confirm: t('.comfirm')} %>
+                    <!-- 編集 -->
+                    <%= link_to t('.edit'), edit_post_path(post), class: 'dropdown-item'%>
+                </div>
+            </div>
         </li>
     <% end %>
 </ul>

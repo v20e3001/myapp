@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #
 class Post < ApplicationRecord
+    has_many :comments
     # タイトル:空文字禁止、最低３文字以上
     validates :title, presence: true, length: {minimum: 3}
     # body :空文字禁止
