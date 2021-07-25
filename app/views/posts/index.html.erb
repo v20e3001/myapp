@@ -4,8 +4,10 @@
 <!-- ヘッダー -->
 <div class="d-flex justify-content-between">
     <h2>My Posts</h2>
-    <!-- 新規作成ボタン -->
-    <%= button_to t('.add_new'), new_post_path, method: :get, class: 'btn btn-sm btn-primary' %>
+    <!-- 新規作成ボタン ※システムにサインインしている時のみ表示 -->
+    <% if session[:user_id] %>
+        <%= button_to t('.add_new'), new_post_path, method: :get, class: 'btn btn-sm btn-primary' %>
+    <% end %>
 </div>
 <!-- 記事 -->
 <ul class="list-group mt-2">

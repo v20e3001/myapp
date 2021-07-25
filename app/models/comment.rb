@@ -11,4 +11,9 @@
 class Comment < ApplicationRecord
   belongs_to :post
   validates :body, presence: true
+  
+  #resources :posts do
+  #  resource :comments
+  #end
+  
 end

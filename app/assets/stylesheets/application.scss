@@ -66,6 +66,19 @@ textarea{
     font-weight: bold;
 }
 
+.signin-form input[type='text']{
+    margin-right: 4px;
+    width: 120px;
+}
+
+.signin-form {
+    margin-bottom: 4px;
+}
+
 //.command{
 //    font-size: 12px;
 //}
+
+a.btn:visited{
+    color: #fff;
+}
