@@ -10,8 +10,9 @@ class PostsController < ApplicationController
     end
     
     def create
-        #render plain: "受信パラメター：#{params}"
-        @post = Post.new(post_params)
+        # サインインしているユーザのidでブログの新規登録を行う
+        @post = Post.new(post_params.merge({user_id: session[:user_id]}))
+        authorize @post
         if @post.save
             # トップページ（→新規ブログの一覧に書いてあるページ）にリダイレクトする
             redirect_to posts_path
@@ -24,6 +25,7 @@ class PostsController < ApplicationController
     
     def new
         @post = Post.new
+        authorize @post
     end
     
     def edit
@@ -42,11 +44,21 @@ class PostsController < ApplicationController
         end
     end
     
+    # 注目しているレコードのIDがユーザIDと等しいか
+    # 等しい場合はupdateが実行される
+    def update?
+        record.user_id == user_id
+    end
+    
     # 既存の記事を削除する
     def destroy
         @post = Post.find(params[:id])
         @post.destroy
         redirect_to posts_path
+    end
+    
+    def destroy?
+        update?
     end
     
     private def post_params

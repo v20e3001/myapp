@@ -1,12 +1,13 @@
-<% if session[:user_id] %>
+<!-- サインイン済みの場合 -->
+<% if current_user %>
     <div class='d-flex justify-content-end mb-2'>
         <!-- サインイン中のユーザの名前 -->
-        <%= User.find(session[:user_id]).display_name %>
+        <%= current_user.display_name %>
         <!-- 各種ボタン -->
         <%= link_to t('.signout'), session_path(session[:user_id]), method: :delete, class: 'btn btn-sm btn-primary mr-2' %>
         <%= link_to t('.signup'), new_user_path, class: 'btn btn-sm btn-secondary' %>
     </div>
-    
+<!-- サインイン済みでない場合 -->
 <% else %>
     <!-- ユーザデータがデータベースに一つ以上記録されている場合 -->
     <% if User.all.any? %>

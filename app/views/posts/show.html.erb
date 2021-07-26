@@ -1,6 +1,16 @@
+<!-- 記事のタイトル -->
 <h2><%= @post.title %></h2>
+<hr>
+
+<!-- 記事の投稿者 -->
+<p class='text-right'>
+    <%= @post.user.display_name %>
+</p>
+
+<!-- 記事の内容 -->
 <%= simple_format @post.body %>
 
+<!-- 表示している記事に対するコメント一覧 -->
 <h3>Comments</h3>
 <% if @post.comments.any? %>
 <ul>
@@ -10,6 +20,7 @@
 </ul>
 <% end %>
 
+<!-- 入力フォーム -->
 <%= form_for [@post, @post.comments.build] do |f| %>
 <p>
     <%= f.text_field :body %>

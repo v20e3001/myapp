@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between">
     <h2>My Posts</h2>
     <!-- 新規作成ボタン ※システムにサインインしている時のみ表示 -->
-    <% if session[:user_id] %>
+    <% if current_user %>
         <%= button_to t('.add_new'), new_post_path, method: :get, class: 'btn btn-sm btn-primary' %>
     <% end %>
 </div>
@@ -23,22 +23,28 @@
                 <% if post.comments.any? %>
                     <span class="badge badge-primary badge-pill"><%= post.comments.size %></span>
                 <% end %>
-                <!-- 記事作成の日時を表示 -->
+                <br>
                 <span class='text-secondary'>
+                    <!-- 投稿者の名前 -->
+                    <%= post.user.display_name + ", " %>
+                    <!-- 記事作成の日時を表示 -->
                     <%= l(post.created_at, format: :long) %>
                 </span>
             </div>
             <!-- 記事の編集用のドロップダウン -->
-            <div class="dropdown">
-                <button class="btn btn-sm btn-link dropdown-toggle p-0" data-toggle="dropdown">
-                </button>
-                <div class="dropdown-menu">
-                    <!-- 削除 -->
-                    <%= link_to t('.delete'), post_path(post), method: :delete, class: 'command', data: {confirm: t('.comfirm')} %>
-                    <!-- 編集 -->
-                    <%= link_to t('.edit'), edit_post_path(post), class: 'dropdown-item'%>
+            <!-- 自身が投稿した記事のみ▼ボタンを表示 -->
+            <% if current_user && current_user.id == post.user_id %>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-link dropdown-toggle p-0" data-toggle="dropdown">
+                    </button>
+                    <div class="dropdown-menu">
+                        <!-- 削除 -->
+                        <%= link_to t('.delete'), post_path(post), method: :delete, class: 'command', data: {confirm: t('.comfirm')} %>
+                        <!-- 編集 -->
+                        <%= link_to t('.edit'), edit_post_path(post), class: 'dropdown-item'%>
+                    </div>
                 </div>
-            </div>
+            <% end %>
         </li>
     <% end %>
 </ul>
