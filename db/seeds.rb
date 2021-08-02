@@ -10,7 +10,7 @@
 user = User.create(signin_name: 'user1', display_name: '分大太郎', password: 'bundai', password_confirmation: 'bundai')
 
 5.times do |i|
-    Post.create(title: "title #{i}", body: "body #{i}")
+    user.posts.create(title: "title #{i}", body: "body #{i}")
 end
 
 3.times do |i|

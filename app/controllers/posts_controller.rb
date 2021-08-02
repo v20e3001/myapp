@@ -50,17 +50,6 @@ class PostsController < ApplicationController
         record.user_id == user_id
     end
     
-    # 既存の記事を削除する
-    def destroy
-        @post = Post.find(params[:id])
-        @post.destroy
-        redirect_to posts_path
-    end
-    
-    def destroy?
-        update?
-    end
-    
     private def post_params
         params.require(:post).permit(:title, :body)
     end
